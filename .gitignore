@@ -47,6 +47,27 @@ htmlcov/
 .tox/
 *.cover
 
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+*.iml
+*.ipr
+*.iws
+*.jks
+*.key
+*.p8
+*.p12
+*.pem
+*.pfx
+*.keystore
+!gradle-wrapper.jar
+!**/ios/**/Flutter/Generated.xcconfig
+!**/ios/**/Flutter/ephemeral/
+
 # Misc
 *.bak
 *.orig
