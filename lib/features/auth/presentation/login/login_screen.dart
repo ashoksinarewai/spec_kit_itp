@@ -304,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _loading
                         ? null
                         : () => _socialLogin('microsoft'),
-                    icon: _MicrosoftIcon(size: 20),
+                    icon: const _MicrosoftIcon(size: 20),
                     label: const Text('Microsoft'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black87,
@@ -322,7 +322,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _loading
                         ? null
                         : () => _socialLogin('google'),
-                    icon: _GoogleIcon(size: 20),
+                    icon: const _GoogleIcon(size: 20),
                     label: const Text('Google'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black87,

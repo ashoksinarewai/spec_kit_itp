@@ -46,6 +46,7 @@
 - [x] T012 Implement AuthRepository in lib/features/auth/data/repositories/auth_repository_impl.dart using AuthRemoteDataSource and AuthLocalDataSource; implement login, refreshSession, requestPasswordReset, socialLogin, logout, getCurrentSession
 - [x] T013 Create LoginUseCase in lib/features/auth/domain/usecases/login_usecase.dart that validates Credentials (non-empty email/password), calls AuthRepository.login, returns AuthSession or domain error (invalid credentials, network error)
 - [x] T014 Create app bootstrap / auth guard logic in lib/core/auth/auth_bootstrap.dart (or main/auth flow): on launch call getCurrentSession/refreshSession; if valid session navigate to Dashboard, else show LoginScreen; handle 401 by clearing storage and showing login with optional "Session expired" message
+- [x] T014a Add abstract AuthRemoteDataSource and ApiAuthRemoteDataSource; create mock data and AuthMockRemoteDataSource in lib/features/auth/data/mock/ per contracts/auth-api.md and data-model.md; wire USE_MOCK_AUTH in main.dart for testing/demo
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
