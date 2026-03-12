@@ -1,4 +1,4 @@
-# Close GitHub issues for completed tasks (T001-T014).
+# Close GitHub issues for completed tasks (T001-T014, and optionally T014a).
 # Run from repo root after Phase 1 & 2 are done and tasks.md is updated.
 # Requires: gh CLI installed and authenticated (gh auth login).
 
@@ -17,3 +17,4 @@ foreach ($num in $CompletedIssueNumbers) {
     Write-Host "Closed issue #$num"
 }
 Write-Host "Done. Closed issues #4-#17 (T001-T014)."
+Write-Host "T014a: no issue in this script. To sync T014a, create an issue with title '[T014a] Add mock auth data and AuthMockRemoteDataSource', labels feature/001-user-auth, phase: foundational, then close it. See github-issues-sync.md."

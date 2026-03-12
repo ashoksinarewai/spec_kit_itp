@@ -46,7 +46,7 @@ Full text for each user story is in `spec.md` (User Scenarios & Testing).
 | Phase | Task IDs | User Story label |
 |-------|----------|------------------|
 | Phase 1: Setup | T001–T003 | — |
-| Phase 2: Foundational | T004–T014 | — |
+| Phase 2: Foundational | T004–T014, T014a | — |
 | Phase 3 | T015–T020 | US1 |
 | Phase 4 | T021–T024 | US2 |
 | Phase 5 | T025–T028 | US3 |
@@ -72,7 +72,7 @@ That will create one issue per task in the repository for the current feature.
 
 When you complete tasks and mark them `[x]` in `tasks.md`, sync that status to GitHub by closing the corresponding issues.
 
-### Completed now (T001–T014)
+### Completed now (T001–T014, T014a)
 
 | Task   | GitHub Issue | Link |
 |--------|--------------|------|
@@ -90,6 +90,7 @@ When you complete tasks and mark them `[x]` in `tasks.md`, sync that status to G
 | T012   | #15 | https://github.com/ashoksinarewai/spec_kit_itp/issues/15 |
 | T013   | #16 | https://github.com/ashoksinarewai/spec_kit_itp/issues/16 |
 | T014   | #17 | https://github.com/ashoksinarewai/spec_kit_itp/issues/17 |
+| T014a  | *(not in script)* | Create manually: title **"[T014a] Add mock auth data and AuthMockRemoteDataSource"**, labels `feature/001-user-auth`, `phase: foundational`. Then close with comment: *Completed in branch 001-user-auth (mock data, abstract datasource, USE_MOCK_AUTH).* |
 
 **Option A – Script (if `gh` is installed):**
 
