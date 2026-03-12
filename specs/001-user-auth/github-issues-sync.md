@@ -68,6 +68,47 @@ That will create one issue per task in the repository for the current feature.
 
 ---
 
+## Sync task status to GitHub (close completed issues)
+
+When you complete tasks and mark them `[x]` in `tasks.md`, sync that status to GitHub by closing the corresponding issues.
+
+### Completed now (T001–T014)
+
+| Task   | GitHub Issue | Link |
+|--------|--------------|------|
+| T001   | #4  | https://github.com/ashoksinarewai/spec_kit_itp/issues/4  |
+| T002   | #5  | https://github.com/ashoksinarewai/spec_kit_itp/issues/5  |
+| T003   | #6  | https://github.com/ashoksinarewai/spec_kit_itp/issues/6  |
+| T004   | #7  | https://github.com/ashoksinarewai/spec_kit_itp/issues/7  |
+| T005   | #8  | https://github.com/ashoksinarewai/spec_kit_itp/issues/8  |
+| T006   | #9  | https://github.com/ashoksinarewai/spec_kit_itp/issues/9  |
+| T007   | #10 | https://github.com/ashoksinarewai/spec_kit_itp/issues/10 |
+| T008   | #11 | https://github.com/ashoksinarewai/spec_kit_itp/issues/11 |
+| T009   | #12 | https://github.com/ashoksinarewai/spec_kit_itp/issues/12 |
+| T010   | #13 | https://github.com/ashoksinarewai/spec_kit_itp/issues/13 |
+| T011   | #14 | https://github.com/ashoksinarewai/spec_kit_itp/issues/14 |
+| T012   | #15 | https://github.com/ashoksinarewai/spec_kit_itp/issues/15 |
+| T013   | #16 | https://github.com/ashoksinarewai/spec_kit_itp/issues/16 |
+| T014   | #17 | https://github.com/ashoksinarewai/spec_kit_itp/issues/17 |
+
+**Option A – Script (if `gh` is installed):**
+
+```powershell
+.\specs\001-user-auth\scripts\sync-task-status-to-github.ps1
+```
+
+This closes issues #4–#17 with a comment that they were completed in Phase 1 & 2.
+
+**Option B – Manual:** Open each link above and click **Close issue**, or add a comment (e.g. "Done in Phase 1 & 2") then close.
+
+**Option C – One command with `gh`:**
+
+```powershell
+gh issue close 4 5 6 7 8 9 10 11 12 13 14 15 16 17 --repo ashoksinarewai/spec_kit_itp --comment "Completed in Phase 1 & 2 (Setup + Foundational). See tasks.md and branch 001-user-auth."
+```
+
+---
+
 ## After syncing
 
 - **Link tasks to user stories**: In each task issue, add a line in the body: `Epic: #<issue_number_of_user_story>` (after creating the 5 user story issues, note their numbers and add them to the script or to task bodies).
