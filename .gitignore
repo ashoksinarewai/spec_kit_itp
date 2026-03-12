@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Cursor (optional: uncomment if you want to ignore local Cursor config)
+# .cursor/
+
+# Dependencies / Build
+node_modules/
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Logs & temp
+*.log
+*.tmp
+*.temp
+.cache/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+secrets/
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+*.cover
+
+# Misc
+*.bak
+*.orig
