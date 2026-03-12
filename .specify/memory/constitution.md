@@ -1,15 +1,12 @@
 <!--
   SYNC IMPACT REPORT
-  Version change: (none) → 1.0.0
-  Modified principles: N/A (initial constitution)
-  Added sections: Project Vision, Product Principles, Architecture Standards, Coding Standards,
-    Folder Structure, UI/UX Guidelines, API Integration Standards, State Management Rules,
-    Testing Strategy, Security Principles, Git Workflow, Naming Conventions, Performance Rules,
-    Logging & Error Handling, Documentation Requirements, Governance
-  Removed sections: N/A
-  Templates: plan-template.md ✅ (Constitution Check remains generic), spec-template.md ✅,
-    tasks-template.md ✅ (task types align with principles). No path changes required.
-  Follow-up TODOs: None. All placeholders filled.
+  Version change: 1.0.0 → 1.1.0
+  Modified principles: Naming Conventions (Section 12) enhanced with detailed Flutter-specific rules
+  Added sections: Expanded widget naming rules, Flutter file naming clarifications, variable naming best practices
+  Removed sections: None
+  Templates: plan-template.md ✅ (Constitution Check remains compatible), spec-template.md ✅,
+    tasks-template.md ✅ (task types align with expanded principles). No path changes required.
+  Follow-up TODOs: None. All Flutter naming conventions properly integrated.
 -->
 
 # InTimePro Constitution
@@ -202,14 +199,62 @@ Test layout MUST mirror `lib/` (e.g. `test/features/auth/`, `test/core/`).
 
 ## 12. Naming Conventions
 
-- **Files**: snake_case (e.g. `time_tracking_service.dart`, `auth_repository_impl.dart`).
-- **Classes**: PascalCase. Suffixes: `*Repository`, `*UseCase`, `*ViewModel`, `*Bloc`, `*State`,
-  `*Event` as appropriate.
-- **Variables and functions**: camelCase. Boolean names SHOULD read as predicates (e.g.
-  `isLoggedIn`, `hasPendingTimesheet`).
-- **Constants**: lowerCamelCase for Dart constants; SCREAMING_SNAKE_CASE only when matching
-  external (e.g. API keys or env var names).
-- **Assets**: snake_case (e.g. `icons/clock_in.svg`).
+### 12.1 File Naming
+
+All Dart file names MUST follow snake_case:
+- Use lowercase letters only
+- Separate words using underscores (_)
+- Do NOT use camelCase or PascalCase in file names
+- File names MUST clearly describe the purpose of the file
+
+**Examples**: `login_screen.dart`, `user_profile.dart`, `api_service.dart`, `time_tracking_service.dart`, `auth_repository_impl.dart`
+
+**Assets**: snake_case for all assets (e.g. `icons/clock_in.svg`, `images/user_avatar.png`)
+
+### 12.2 Class Naming
+
+All Dart classes MUST follow PascalCase:
+- The first letter of each word MUST be capitalized
+- The class name MUST clearly represent the purpose of the component
+- The class name MUST logically match the file's purpose
+- Use appropriate suffixes: `*Repository`, `*UseCase`, `*ViewModel`, `*Bloc`, `*State`, `*Event`
+
+**Examples**: `LoginScreen`, `UserProfile`, `ApiService`, `AuthRepository`, `TimeTrackingUseCase`
+
+### 12.3 Widget Naming
+
+Widget names MUST clearly describe their functionality:
+- Screen widgets MUST end with `Screen` (e.g. `LoginScreen`, `ProfileScreen`, `DashboardScreen`)
+- UI components MUST use meaningful names based on their UI purpose (e.g. `UserCard`, `RatingSelector`, `TaskListItem`)
+- Avoid generic names like `Widget1`, `MyWidget`, `TestComponent`
+
+**Good examples**: `LoginScreen`, `ProfileScreen`, `UserCard`, `RatingSelector`, `TimeEntryRow`, `NavigationDrawer`
+
+**Avoid**: Generic or unclear names that don't describe the component's purpose
+
+### 12.4 Variable and Function Naming
+
+All variables and functions MUST follow camelCase:
+- The first word MUST start with lowercase
+- Each following word MUST start with uppercase
+- Variable names MUST clearly describe the stored data
+- Boolean names SHOULD read as predicates (e.g. `isLoggedIn`, `hasPendingTimesheet`, `canSubmitTimesheet`)
+
+**Examples**: `userName`, `totalItems`, `isLoggedIn`, `hasPendingTimesheet`, `submitTimesheet()`, `calculateDuration()`
+
+### 12.5 Constants
+
+- **Dart constants**: lowerCamelCase for internal constants (e.g. `maxRetryAttempts`, `defaultTimeout`)
+- **External references**: SCREAMING_SNAKE_CASE only when matching external systems (e.g. API keys, environment variables)
+
+### 12.6 General Naming Rules
+
+Always ensure:
+- Names are clear and meaningful
+- Naming is consistent across the project
+- The structure is easy to read and maintain
+- Names accurately reflect the component's role and responsibility
+- Avoid abbreviations unless they are well-known (e.g. `url`, `api`, `ui`)
 
 ---
 
@@ -265,4 +310,4 @@ Test layout MUST mirror `lib/` (e.g. `test/features/auth/`, `test/core/`).
 - **Versioning**: MAJOR for backward-incompatible governance or principle removals; MINOR
   for new principles or material new sections; PATCH for clarifications and typos.
 
-**Version**: 1.0.0 | **Ratified**: 2025-03-12 | **Last Amended**: 2025-03-12
+**Version**: 1.1.0 | **Ratified**: 2025-03-12 | **Last Amended**: 2026-03-12
