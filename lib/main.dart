@@ -33,7 +33,10 @@ class InTimeProApp extends StatelessWidget {
 
     return AuthBootstrap(
       repository: authRepository,
-      buildLogin: () => LoginScreen(authRepository: authRepository),
+      buildLogin: (onLoginSuccess) => LoginScreen(
+        authRepository: authRepository,
+        onLoginSuccess: onLoginSuccess,
+      ),
       buildDashboard: (session) =>
           DashboardPlaceholderScreen(session: session),
     );

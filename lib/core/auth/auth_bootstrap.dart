@@ -5,7 +5,8 @@ import '../../features/auth/domain/repositories/auth_repository.dart';
 
 /// On launch: restore session via refresh token; if valid show [buildDashboard], else [buildLogin].
 /// On 401 from refresh: clear storage and show login (caller can show "Session expired").
-class AuthBootstrap extends StatelessWidget {
+/// When login succeeds, [buildLogin] receives [onLoginSuccess] and calls it with the new session.
+class AuthBootstrap extends StatefulWidget {
   const AuthBootstrap({
     super.key,
     required this.repository,
@@ -14,13 +15,30 @@ class AuthBootstrap extends StatelessWidget {
   });
 
   final AuthRepository repository;
-  final Widget Function() buildLogin;
+  final Widget Function(void Function(AuthSession session) onLoginSuccess)
+      buildLogin;
   final Widget Function(AuthSession session) buildDashboard;
 
   @override
+  State<AuthBootstrap> createState() => _AuthBootstrapState();
+}
+
+class _AuthBootstrapState extends State<AuthBootstrap> {
+  AuthSession? _session;
+
+  @override
   Widget build(BuildContext context) {
+    if (_session != null) {
+      return MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
+        ),
+        home: widget.buildDashboard(_session!),
+      );
+    }
     return FutureBuilder<AuthSession?>(
-      future: repository.getCurrentSession(),
+      future: widget.repository.getCurrentSession(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const MaterialApp(
@@ -36,7 +54,7 @@ class AuthBootstrap extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
               useMaterial3: true,
             ),
-            home: buildDashboard(session),
+            home: widget.buildDashboard(session),
           );
         }
         return MaterialApp(
@@ -44,7 +62,9 @@ class AuthBootstrap extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             useMaterial3: true,
           ),
-          home: buildLogin(),
+          home: widget.buildLogin((session) {
+            setState(() => _session = session);
+          }),
         );
       },
     );
