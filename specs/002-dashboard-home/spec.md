@@ -2,7 +2,7 @@
 
 **Feature Branch**: `002-dashboard-home`  
 **Created**: 2026-03-13  
-**Status**: Draft  
+**Status**: Draft
 **Input**: User description: "Feature: Dashboard (Home) module for InTimePro mobile app. As an employee, I want a Home/Dashboard screen after login so that I can see my profile, today's time metrics (clock-in time, active time, time at work), my currently active task with a live timer and pause/complete actions, and a searchable/filterable list of my tasks (New, In Progress, Overdue, Complete) with per-task timers and quick actions (start/complete). The screen should have a header with user name, role, and online status; a bottom navigation bar with Home, Activities, Projects, and Notifications. Include loading, empty, and error states; assume authenticated access only. Primary user: Employee."
 
 ## User Scenarios & Testing *(mandatory)*
@@ -76,13 +76,13 @@ As an employee, I want clear loading, empty, and error states on the Home screen
 2. **Given** I have no tasks at all, **When** I view the task list, **Then** I see an empty state (e.g. "You have no tasks" or similar) with optional guidance (e.g. "Tasks will appear when assigned").
 3. **Given** I have no active task, **When** I view the active task area, **Then** I see an empty state (e.g. "No active task" with option to start from list) rather than a broken or missing block.
 4. **Given** profile, time metrics, or task data fails to load (e.g. network error, server error), **When** the error occurs, **Then** I see an error state with a clear message (e.g. "Unable to load. Please try again.") and, where appropriate, a retry action; I do not see a permanent loading state or a crash.
-5. **Given** I see an error state, **When** I tap Retry (if offered), **Then** the app attempts to reload the failed data and shows loading then success or error again.
+5. **Given** I see an error state, **When** I tap Retry (if offered), **Then** the app retries only the failed section(s) (e.g. tasks only if tasks failed) and shows loading then success or error for that section; other sections (e.g. profile, time metrics) remain unchanged.
 
 ---
 
 ### Edge Cases
 
-- What happens when the user has no clock-in today? The time metrics should show an appropriate empty or default value (e.g. "—" or "Not clocked in") and not break the layout.
+- What happens when the user has no clock-in today? The time metrics show an appropriate empty or default value (e.g. "—" or "Not clocked in") and not break the layout; the Dashboard does not offer a clock-in action (display only; clock-in is out of scope for this module).
 - What happens when the user has many tasks and the list is long? The list should be scrollable; search and filters reduce the visible set; performance remains acceptable (e.g. no visible lag when scrolling or filtering).
 - What happens when the user starts a second task without pausing or completing the first? The system should either prevent starting another (one active task only) or define behavior (e.g. auto-pause first, or replace active); the spec assumes one active task at a time unless product says otherwise.
 - What happens when the timer is running and the app goes to background or the device sleeps? The app should continue to account for elapsed time (e.g. via server sync or local calculation on resume) so the active task timer remains accurate when the user returns.
@@ -98,22 +98,26 @@ As an employee, I want clear loading, empty, and error states on the Home screen
 - **FR-003**: The Home screen MUST display today's time metrics: clock-in time, active time, and time at work (with appropriate values or placeholders when data is missing).
 - **FR-004**: The Home screen MUST display the user's currently active task (when one exists), including project name, billable/non-billable indicator, task description (truncated as needed), and a live-updating elapsed timer.
 - **FR-005**: The system MUST provide Pause and Complete actions for the currently active task; Pause MUST pause the task timer and Complete MUST mark the task complete and update the UI.
-- **FR-006**: The Home screen MUST display a list of the user's tasks with filter tabs for status: New, In Progress, Overdue, and Complete; counts per tab MAY be shown where available.
+- **FR-006**: The Home screen MUST display a list of the current (authenticated) user's tasks only, with filter tabs for status: New, In Progress, Overdue, and Complete. Exactly one filter tab is active at a time; the list shows only tasks in that status. Counts per tab MAY be shown where available.
 - **FR-007**: The task list MUST support search (e.g. by project name or task description) so that the list updates to show only matching tasks.
 - **FR-008**: Each task in the list MUST show project name, billable/non-billable tag, task description (truncated), elapsed time (if applicable), and quick actions: Start (or Resume) and Complete, as applicable to task status.
 - **FR-009**: The system MUST provide a bottom navigation bar with: Home, Activities, Projects, and Notifications; Home MUST be selectable and indicate the current screen when on Dashboard; tapping each item MUST navigate to the corresponding section.
 - **FR-010**: The Home screen MUST show a loading state while profile, time metrics, or task data is being fetched; the user MUST NOT see a blank or broken layout during load.
 - **FR-011**: The Home screen MUST show an empty state when there is no active task (e.g. "No active task" with optional guidance).
 - **FR-012**: The Home screen MUST show an empty state when the task list (or filtered/search result) has no tasks (e.g. "No tasks" or "No tasks in this status").
-- **FR-013**: When profile, time metrics, or task data fails to load (e.g. network or server error), the system MUST show an error state with a clear message and, where appropriate, a retry action.
+- **FR-013**: When profile, time metrics, or task data fails to load (e.g. network or server error), the system MUST show an error state with a clear message and, where appropriate, a retry action. Retry MUST reload only the failed section(s) (e.g. if only tasks failed, retry tasks/active task only; profile and time metrics remain unchanged).
 - **FR-014**: The active task timer MUST update in real time (e.g. every second or at a defined interval) while the task is active and the user is on the Home screen.
 - **FR-015**: Access to the Home/Dashboard screen MUST be restricted to authenticated users only; unauthenticated users MUST be redirected to login.
 
+### Non-Functional / Quality
+
+- **NFR-001**: The Home/Dashboard screen MUST meet WCAG 2.1 Level AA: sufficient color contrast, minimum touch target size (e.g. 44×44 pt), semantic labels for interactive elements and status (e.g. online, timer), and screen reader support so that core flows (profile, time metrics, active task, task list, navigation) are operable and understandable via assistive technologies.
+
 ### Key Entities
 
-- **Employee / User profile**: Display name, role (e.g. Frontend Developer), online status; used in the header. Sourced from authenticated session and/or profile API.
+- **Employee / User profile**: Display name, role (e.g. Frontend Developer), online status; used in the header. Sourced from authenticated session and/or profile API. Online status is backend-provided (e.g. from heartbeat or last-activity); the app displays the value and shows Offline/Unknown when the value is unavailable or network is offline.
 - **Today's time metrics**: Clock-in time (when the user clocked in today), active time (time spent in active task(s)), time at work (total time at work today). May be computed or provided by backend.
-- **Task**: Represents a work item; has project name, billable/non-billable status, description, status (New, In Progress, Overdue, Complete), and elapsed time; may be the currently active task or an item in the list.
+- **Task**: Represents a work item assigned to the current user; has project name, billable/non-billable status, description, status (New, In Progress, Overdue, Complete), and elapsed time; may be the currently active task or an item in the list. The task list displays only the authenticated user's tasks.
 - **Active task**: The single task currently being timed; has a live timer and pause/complete actions.
 - **Navigation item**: Home, Activities, Projects, Notifications; used in the bottom navigation bar for app-level navigation.
 
@@ -127,10 +131,12 @@ As an employee, I want clear loading, empty, and error states on the Home screen
 - **SC-004**: Loading states are visible during data fetch; empty states are shown when there is no active task or no tasks in the list/filter; error states are shown on load failure with a retry option where appropriate.
 - **SC-005**: The user can navigate from the Home screen to Activities, Projects, and Notifications via the bottom navigation bar; Home is clearly indicated when on the Dashboard.
 - **SC-006**: Unauthenticated access to the Home/Dashboard is blocked and redirected to login; no Dashboard data is exposed without a valid session.
+- **SC-007**: The Home/Dashboard screen meets WCAG 2.1 Level AA (contrast, touch targets, labels, screen reader support); core flows are verifiable via accessibility testing.
 
 ## Assumptions
 
 - The user is already authenticated; login and auth flows are out of scope for this spec (covered by User Authentication spec).
+- When the user has not clocked in today, the Dashboard displays a placeholder (e.g. "—" or "Not clocked in") for time metrics only; no clock-in action is provided on the Dashboard (clock-in/attendance flow is out of scope).
 - Profile data (name, role), online status, today's time metrics, and task list (including active task) are provided by backend APIs or equivalent; exact contracts are defined elsewhere.
 - At most one task is "active" (being timed) at a time; starting a new task either requires completing/pausing the current one or the system auto-pauses/replaces per product rules.
 - Bottom navigation items (Activities, Projects, Notifications) are separate modules; this spec only requires that the Home screen includes the nav bar and that tapping those items navigates to the correct destination (implementation of those screens is out of scope).
@@ -145,3 +151,8 @@ As an employee, I want clear loading, empty, and error states on the Home screen
 - Q: How frequently should the active task timer update in the UI? → A: **Every 1 second (1 Hz)**. Standard cadence for time-tracking apps; balances visual responsiveness, user perception, and battery/CPU efficiency. Timer display updates every 1000ms.
 - Q: What pagination/loading strategy for the task list (potentially 100+ tasks)? → A: **Lazy load with pagination (20-30 items per page)**. Load first 20-30 tasks on screen load, show "Load More" button or pagination control to fetch next batch. Balances performance (fast initial load), UX (smooth scrolling), and simplicity. Search/filter results also paginated.
 - Q: Character limit for task description before truncation? → A: **100 characters**. Standard mobile best practice. Descriptions truncated with "..." at 100 chars; allows meaningful context to display without excessive wrapping in task cards. Full description accessible via detail view if needed.
+- Q: What accessibility standard should the Dashboard (Home) meet? → A: **WCAG 2.1 Level AA**. Contrast, touch targets, labels, and screen reader support for the Dashboard screen.
+- Q: How is "online" status determined for the header? → A: **Backend-provided**. App displays the value from the server (e.g. heartbeat or last-activity); app does not infer status from network alone.
+- Q: When there is no clock-in today, should the Dashboard offer a clock-in action? → A: **Display only**. Show placeholder (e.g. "Not clocked in" / "—"); no clock-in button or action on the Dashboard.
+- Q: Task list filter tabs: single or multi-select? And whose tasks? → A: **Single selection**. Exactly one tab active; list shows only tasks in that status. List shows only the **current (authenticated) user's tasks**.
+- Q: When user taps Retry after a load failure, retry only failed section or full screen? → A: **Retry only the failed section(s)**. If only tasks failed, retry tasks (and active task) only; profile and time metrics stay as-is.
