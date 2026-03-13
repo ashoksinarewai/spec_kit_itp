@@ -136,3 +136,12 @@ As an employee, I want clear loading, empty, and error states on the Home screen
 - Bottom navigation items (Activities, Projects, Notifications) are separate modules; this spec only requires that the Home screen includes the nav bar and that tapping those items navigates to the correct destination (implementation of those screens is out of scope).
 - Hamburger or other header menu (if present in the design) is for future or separate spec unless explicitly required; the spec focuses on the described header and bottom nav.
 - Design reference: Header with name, role, online status; time metrics (clock-in, active time, time at work); prominent active task card with timer and pause/complete; task list with search, status tabs, and per-task start/complete, aligned with the provided InTimePro Home screen design.
+
+## Clarifications
+
+### Session 2026-03-13
+
+- Q: When offline, how should pause, complete, and start task actions be handled? → A: **Queue locally & sync on reconnection**. Actions accepted by the app, stored locally, shown as "pending sync" or confirmed with a local indicator, and automatically synced when connection restored. User receives feedback (e.g., "Synced when online" or checkmark) once sync succeeds.
+- Q: How frequently should the active task timer update in the UI? → A: **Every 1 second (1 Hz)**. Standard cadence for time-tracking apps; balances visual responsiveness, user perception, and battery/CPU efficiency. Timer display updates every 1000ms.
+- Q: What pagination/loading strategy for the task list (potentially 100+ tasks)? → A: **Lazy load with pagination (20-30 items per page)**. Load first 20-30 tasks on screen load, show "Load More" button or pagination control to fetch next batch. Balances performance (fast initial load), UX (smooth scrolling), and simplicity. Search/filter results also paginated.
+- Q: Character limit for task description before truncation? → A: **100 characters**. Standard mobile best practice. Descriptions truncated with "..." at 100 chars; allows meaningful context to display without excessive wrapping in task cards. Full description accessible via detail view if needed.
