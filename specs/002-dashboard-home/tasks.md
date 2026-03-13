@@ -43,7 +43,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
 
 ---
 
-- [ ] T001 Set up Dashboard feature folder structure with data/domain/presentation layers
+- [X] T001 Set up Dashboard feature folder structure with data/domain/presentation layers
   - **Description**: Create all directories per plan §3: `lib/features/dashboard/{data,domain,presentation}` with subdirs (datasources, models, repositories, mappers, entities, usecases, pages, widgets, viewmodels).
   - **File**: `lib/features/dashboard/` (folder structure)
   - **Acceptance Criteria**:
@@ -54,7 +54,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: None
   - **Effort**: XS
 
-- [ ] T002 [P] Define domain entities: EmployeeProfile, TimeMetrics, Task, ActiveTask
+- [X] T002 [P] Define domain entities: EmployeeProfile, TimeMetrics, Task, ActiveTask
   - **Description**: Create immutable Dart data classes for all core domain entities with proper null safety, enums for TaskStatus and OnlineStatus.
   - **Files**:
     - `lib/features/dashboard/domain/entities/employee_profile.dart`
@@ -73,7 +73,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: None
   - **Effort**: S
 
-- [ ] T003 [P] Create data models (DTOs) with JSON serialization: *Model classes
+- [X] T003 [P] Create data models (DTOs) with JSON serialization: *Model classes
   - **Description**: Define TaskModel, TaskListModel, TimeMetricsModel, EmployeeProfileModel with @JsonSerializable, factory constructors, and toJson().
   - **Files**:
     - `lib/features/dashboard/data/models/employee_profile_model.dart`
@@ -90,7 +90,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T002
   - **Effort**: M
 
-- [ ] T004 [P] Create mapper: DTO ↔ Entity conversion in DashboardMapper
+- [X] T004 [P] Create mapper: DTO ↔ Entity conversion in DashboardMapper
   - **Description**: Implement bidirectional mapping between data models and domain entities to maintain layer separation.
   - **File**: `lib/features/dashboard/data/mappers/dashboard_mapper.dart`
   - **Acceptance Criteria**:
@@ -103,7 +103,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T002, T003
   - **Effort**: S
 
-- [ ] T005 Define DashboardRepository interface (abstract)
+- [X] T005 Define DashboardRepository interface (abstract)
   - **Description**: Create abstract `DashboardRepository` interface with all required methods (getDashboardData, pause, complete, start, search).
   - **File**: `lib/features/dashboard/domain/repositories/dashboard_repository.dart`
   - **Acceptance Criteria**:
@@ -117,7 +117,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T002
   - **Effort**: S
 
-- [ ] T006 Implement DashboardRepositoryImpl with mock/test data initially
+- [X] T006 Implement DashboardRepositoryImpl with mock/test data initially
   - **Description**: Implement `DashboardRepository` using mock data first (no real API calls yet); scaffold for later API integration and SQLite caching.
   - **File**: `lib/features/dashboard/data/repositories/dashboard_repository_impl.dart`
   - **Acceptance Criteria**:
@@ -132,7 +132,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T004, T005
   - **Effort**: M
 
-- [ ] T007 [P] Create domain use cases: GetDashboardDataUseCase, PauseActiveTaskUseCase, CompleteActiveTaskUseCase, StartTaskUseCase
+- [X] T007 [P] Create domain use cases: GetDashboardDataUseCase, PauseActiveTaskUseCase, CompleteActiveTaskUseCase, StartTaskUseCase
   - **Description**: Implement use case classes that orchestrate repository calls and business logic per domain layer separation (no UI, no DB specifics).
   - **Files**:
     - `lib/features/dashboard/domain/usecases/get_dashboard_data_usecase.dart`
@@ -150,7 +150,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T005, T006
   - **Effort**: M
 
-- [ ] T008 [P] Create Riverpod providers for dashboard state
+- [X] T008 [P] Create Riverpod providers for dashboard state
   - **Description**: Set up Riverpod FutureProvider for dashboard data, StateNotifierProvider for filter state, and derived filtered tasks provider.
   - **File**: `lib/features/dashboard/presentation/viewmodels/dashboard_providers.dart` (or split into providers file)
   - **Acceptance Criteria**:
@@ -165,7 +165,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T006, T007
   - **Effort**: M
 
-- [ ] T009 Create DashboardViewModel using Riverpod providers
+- [X] T009 Create DashboardViewModel using Riverpod providers
   - **Description**: Assemble the ViewModel as a StateNotifier or Riverpod family provider that holds dashboard UI state (profile, metrics, active task, tasks, loading, error).
   - **File**: `lib/features/dashboard/presentation/viewmodels/dashboard_viewmodel.dart`
   - **Acceptance Criteria**:
@@ -178,7 +178,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T008
   - **Effort**: M
 
-- [ ] T010 Build HeaderWidget displaying user profile and online status
+- [X] T010 Build HeaderWidget displaying user profile and online status
   - **Description**: Create reusable HeaderWidget that displays user name, role, online status with visual indicator (colored dot, badge, etc.).
   - **File**: `lib/features/dashboard/presentation/widgets/header_widget.dart`
   - **Acceptance Criteria**:
@@ -192,7 +192,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T002
   - **Effort**: S
 
-- [ ] T011 [P] Build TimeMetricsWidget displaying clock-in, active time, total work time
+- [X] T011 [P] Build TimeMetricsWidget displaying clock-in, active time, total work time
   - **Description**: Create widget to display today's time metrics in an organized card layout with proper formatting.
   - **File**: `lib/features/dashboard/presentation/widgets/time_metrics_widget.dart`
   - **Acceptance Criteria**:
@@ -207,7 +207,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T002
   - **Effort**: S
 
-- [ ] T012 [P] Build LoadingStateWidget (reusable skeleton loader)
+- [X] T012 [P] Build LoadingStateWidget (reusable skeleton loader)
   - **Description**: Create reusable loading state widget with skeleton placeholders for dashboard sections.
   - **File**: `lib/features/dashboard/presentation/widgets/loading_state_widget.dart`
   - **Acceptance Criteria**:
@@ -219,7 +219,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: None
   - **Effort**: M
 
-- [ ] T013 [P] Build ErrorStateWidget (reusable error display with retry)
+- [X] T013 [P] Build ErrorStateWidget (reusable error display with retry)
   - **Description**: Create reusable error state widget showing error message and retry button.
   - **File**: `lib/features/dashboard/presentation/widgets/error_state_widget.dart`
   - **Acceptance Criteria**:
@@ -232,7 +232,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: None
   - **Effort**: S
 
-- [ ] T014 Build DashboardScreen scaffold integrating header, metrics, active task area, error/loading states
+- [X] T014 Build DashboardScreen scaffold integrating header, metrics, active task area, error/loading states
   - **Description**: Create main DashboardScreen that orchestrates HeaderWidget, TimeMetricsWidget, loading/error states, and serves as container for active task and task list.
   - **File**: `lib/features/dashboard/presentation/pages/dashboard_screen.dart`
   - **Acceptance Criteria**:
@@ -248,7 +248,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T009, T010, T011, T012, T013
   - **Effort**: M
 
-- [ ] T015 [P] Add unit tests for Phase 1 domain and data components
+- [X] T015 [P] Add unit tests for Phase 1 domain and data components
   - **Description**: Write comprehensive unit tests for use cases, mappers, and repository impl with mock data.
   - **Files**:
     - `test/features/dashboard/domain/usecases/get_dashboard_data_usecase_test.dart`
@@ -264,7 +264,7 @@ This document breaks down the Dashboard feature into development-ready tasks org
   - **Dependencies**: T007, T004, T006
   - **Effort**: M
 
-- [ ] T016 Verify auth service integration and token injection in API calls
+- [X] T016 Verify auth service integration and token injection in API calls
   - **Description**: Ensure existing auth service is properly integrated into repository; verify Bearer token is injected into mock/real API calls.
   - **File**: `lib/features/dashboard/data/repositories/dashboard_repository_impl.dart` (update)
   - **Acceptance Criteria**:
